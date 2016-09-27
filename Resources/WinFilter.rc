@@ -1,0 +1,217 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+//#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+//LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+#include <winuser.h>
+#include <oledlg.dlg>
+
+WINFILTER_DLG DIALOGEX 0, 0, 386, 282
+STYLE DS_MODALFRAME | WS_CHILD | WS_VISIBLE
+FONT 8, "Tahoma"
+BEGIN
+    PUSHBUTTON      "Execute",IDC_EXECUTE,168,265,50,14
+    CONTROL         "Blackman-Harris",IDC_BHARRIS,"Button",
+                    BS_AUTORADIOBUTTON,13,165,65,15
+    CONTROL         "Blackman",IDC_BLACKMAN,"Button",BS_AUTORADIOBUTTON,13,
+                    154,47,10
+    CONTROL         "Cauchy",IDC_CAUCHY,"Button",BS_AUTORADIOBUTTON,13,196,
+                    40,10
+    CONTROL         "Cosine",IDC_COSINE,"Button",BS_AUTORADIOBUTTON,84,154,
+                    37,10
+    CONTROL         "Gaussian",IDC_GAUSSIAN,"Button",BS_AUTORADIOBUTTON,84,
+                    168,45,10
+    CONTROL         "Hamming",IDC_HAMMING,"Button",BS_AUTORADIOBUTTON,84,182,
+                    45,10
+    CONTROL         "Kaiser",IDC_KAISER,"Button",BS_AUTORADIOBUTTON,84,196,
+                    35,10
+    CONTROL         "Bohman",IDC_BOHMAN,"Button",BS_AUTORADIOBUTTON,13,182,
+                    42,10
+    CONTROL         "Poisson",IDC_POSSION,"Button",BS_AUTORADIOBUTTON,154,
+                    155,41,10
+    CONTROL         "Reisz",IDC_REISZ,"Button",BS_AUTORADIOBUTTON,154,168,33,
+                    10
+    CONTROL         "Riemann",IDC_RIEMANN,"Button",BS_AUTORADIOBUTTON,154,
+                    182,44,10
+    CONTROL         "Bartlett",IDC_BARTLETT,"Button",BS_AUTORADIOBUTTON,13,
+                    139,38,10
+    CONTROL         "Tukey",IDC_TUKEY,"Button",BS_AUTORADIOBUTTON,154,196,36,
+                    10
+    CONTROL         "Uniform",IDC_UNIFORM,"Button",BS_AUTORADIOBUTTON,224,
+                    142,40,10
+    CONTROL         "von Hann",IDC_VONHANN,"Button",BS_AUTORADIOBUTTON,224,
+                    168,47,10
+    CONTROL         "Valle-Poisson",IDC_VALLEPOISSON,"Button",
+                    BS_AUTORADIOBUTTON,224,155,58,10
+    GROUPBOX        "Window",IDC_STATIC,5,129,280,80
+    GROUPBOX        "Frequencies",IDC_STATIC,5,50,205,75
+    EDITTEXT        IDC_FC1,92,70,45,14,ES_AUTOHSCROLL
+    LTEXT           "Fc1",IDC_STATIC,75,73,13,8
+    LTEXT           "Fc2",IDC_STATIC,144,73,13,8
+    EDITTEXT        IDC_FC2,160,70,45,14,ES_AUTOHSCROLL
+    LTEXT           "Fs",IDC_STATIC,10,73,8,8
+    EDITTEXT        IDC_FS,22,70,47,14,ES_AUTOHSCROLL
+    CONTROL         "Low/High Pass",IDC_LOWHIPASS,"Button",
+                    BS_AUTORADIOBUTTON,14,105,65,10
+    CONTROL         "Bandpass",IDC_BANDPASS,"Button",BS_AUTORADIOBUTTON,84,
+                    105,47,10
+    CONTROL         "Bandstop",IDC_BANDSTOP,"Button",BS_AUTORADIOBUTTON,154,
+                    105,46,10
+    EDITTEXT        IDC_ALPHA,343,70,32,14,ES_AUTOHSCROLL
+    LTEXT           "Alpha",IDC_STATIC,324,73,19,8
+    EDITTEXT        IDC_Q,235,70,30,14,ES_AUTOHSCROLL
+    LTEXT           "Q",IDC_STATIC,224,73,8,8
+    EDITTEXT        IDC_TAPS,290,70,30,14,ES_AUTOHSCROLL
+    LTEXT           "Taps",IDC_STATIC,272,73,17,8
+    CONTROL         "Automode",IDC_AUTOMODE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,224,105,48,10
+    GROUPBOX        "Design Parameters",IDC_STATIC,215,50,165,75
+    GROUPBOX        "Spectral",IDC_STATIC,290,129,90,80
+    CONTROL         "Inversion",IDC_INVERSION,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,309,153,45,10
+    CONTROL         "Reversal",IDC_REVERSAL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,309,181,44,10
+    GROUPBOX        "Output",IDC_STATIC,5,210,165,50
+    CONTROL         "Impulse",IDC_IMPULSE,"Button",BS_AUTORADIOBUTTON,84,240,
+                    40,10
+    CONTROL         "Frequency (dB)",IDC_FREQDB,"Button",BS_AUTORADIOBUTTON,
+                    14,223,64,10
+    CONTROL         "Frequency (Mag)",IDC_FREQMAG,"Button",
+                    BS_AUTORADIOBUTTON,14,239,69,10
+    CONTROL         "Phase",IDC_PHASE,"Button",BS_AUTORADIOBUTTON,84,223,36,
+                    10
+    GROUPBOX        "Configure Output",IDC_OPCONFIG,175,210,205,50
+    CONTROL         "Graphical Output",IDC_GRAPHOP,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,305,222,69,10
+    CONTROL         "Output Window",IDC_OPWINDOW,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,305,242,65,10
+    EDITTEXT        IDC_OPFILENAME,239,220,46,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_WINFILENAME,239,240,46,14,ES_AUTOHSCROLL
+    LTEXT           "Output Filename",IDC_STATIC,182,223,55,8
+    LTEXT           "Window Filename",IDC_STATIC,180,243,57,8
+    EDITTEXT        IDC_FDELTA,289,103,31,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ATTEN,344,103,31,14,ES_AUTOHSCROLL
+    LTEXT           "Fd",IDC_STATIC,277,106,9,8
+    LTEXT           "Atten",IDC_STATIC,325,106,18,8
+    CONTROL         103,IDB_WINFILTER,"Static",SS_BITMAP,4,3,376,44,
+                    WS_EX_TRANSPARENT | WS_EX_STATICEDGE
+    CONTROL         "Chebyshev",IDC_CHEBYSHEV,"Button",BS_AUTORADIOBUTTON,84,
+                    140,52,10
+    CONTROL         "Nuttall",IDC_NUTTALL,"Button",BS_AUTORADIOBUTTON,154,
+                    141,37,10
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_WINFILTER           BITMAP  DISCARDABLE     "xfilter.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    "WINFILTER_DLG", DIALOG
+    BEGIN
+        BOTTOMMARGIN, 215
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_WINFILTER           ICON    DISCARDABLE     "winfilter.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+WINFILTER MENU DISCARDABLE 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "E&xit",                       ID_FILE_EXIT
+    END
+    POPUP "Help"
+    BEGIN
+        MENUITEM "&About",                      ID_HELP_ABOUT
+    END
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
