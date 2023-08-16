@@ -94,7 +94,7 @@ BEGIN
                     WS_TABSTOP,309,153,45,10
     CONTROL         "Reversal",IDC_REVERSAL,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,309,181,44,10
-    GROUPBOX        "Output",IDC_STATIC,5,210,165,50
+    GROUPBOX        "Output",IDC_STATIC,5,210,155,50
     CONTROL         "Impulse",IDC_IMPULSE,"Button",BS_AUTORADIOBUTTON,84,240,
                     40,10
     CONTROL         "Frequency (dB)",IDC_FREQDB,"Button",BS_AUTORADIOBUTTON,
@@ -103,11 +103,13 @@ BEGIN
                     BS_AUTORADIOBUTTON,14,239,69,10
     CONTROL         "Phase",IDC_PHASE,"Button",BS_AUTORADIOBUTTON,84,223,36,
                     10
-    GROUPBOX        "Configure Output",IDC_OPCONFIG,175,210,205,50
+    GROUPBOX        "Configure Output",IDC_OPCONFIG,165,210,215,50
     CONTROL         "Graphical Output",IDC_GRAPHOP,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,305,222,69,10
+                    WS_TABSTOP,295,220,69,10
     CONTROL         "Output Window",IDC_OPWINDOW,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,305,242,65,10
+                    WS_TABSTOP,295,232,65,10
+    CONTROL         "Symmetric Impulse",IDC_SYMIMP,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,295,244,75,10
     EDITTEXT        IDC_OPFILENAME,239,220,46,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_WINFILENAME,239,240,46,14,ES_AUTOHSCROLL
     LTEXT           "Output Filename",IDC_STATIC,182,223,55,8

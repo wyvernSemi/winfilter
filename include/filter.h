@@ -1,6 +1,6 @@
 //=============================================================
 // 
-// Copyright (c) 1999-2016 Simon Southwell. All rights reserved.
+// Copyright (c) 1999-2023 Simon Southwell. All rights reserved.
 //
 // Date: 11th March 1999
 //
@@ -19,9 +19,6 @@
 // You should have received a copy of the GNU General Public License
 // along with WinFilter. If not, see <http://www.gnu.org/licenses/>.
 //
-// $Id: filter.h,v 1.3 2016-09-27 08:42:34 simon Exp $
-// $Source: /home/simon/CVS/src/dsp/WinFilter/include/filter.h,v $
-//
 //=============================================================
 
 #ifndef _FILTER_H_
@@ -35,7 +32,7 @@
 #include "fft.h"
 #include "window.h"
 
-#ifdef	__cplusplus
+#ifdef    __cplusplus
 #define DLLEXPORT extern "C" 
 #else 
 #define DLLEXPORT
@@ -51,36 +48,37 @@ typedef unsigned char uchar_t;
 
 /* Configuration parameter structure */
 typedef struct { 
-    uint_t 	opimpulse : 1;
-    uint_t 	opwindow  : 1;
-    uint_t 	inversion : 1;
-    uint_t 	reversal  : 1;
-    uint_t 	bandpass  : 1;
-    uint_t 	bandstop  : 1;
-    uint_t 	decibels  : 1;
-    uint_t 	magnitude : 1;
-    uint_t 	phase 	  : 1;
-    uint_t 	removeplot: 1;
-    uint_t 	Xgraph    : 1;
-    uint_t 	automode  : 1;
-    uint_t      normalise : 1;
-    real_t      (*windowfunc)();
-    FILE 	*fp;
-    FILE 	*wfp;
-    uchar_t     window;
-    char 	*filename;
-    char        *wfilename;
-    char 	*plotprog;
-    real_t 	a;
-    real_t 	ripple;
-    long 	Q;
-    long 	N; 
-    real_t 	Fc;
-    real_t 	Fd;
-    real_t 	Fw;
-    real_t 	Fs;
-    real_t 	Ft;
-    real_t 	attenuation;} ConfigStruct;
+    uint_t     opimpulse  : 1;
+    uint_t     opwindow   : 1;
+    uint_t     inversion  : 1;
+    uint_t     reversal   : 1;
+    uint_t     bandpass   : 1;
+    uint_t     bandstop   : 1;
+    uint_t     decibels   : 1;
+    uint_t     magnitude  : 1;
+    uint_t     phase      : 1;
+    uint_t     removeplot : 1;
+    uint_t     Xgraph     : 1;
+    uint_t     automode   : 1;
+    uint_t     normalise  : 1;
+    uint_t     symimpulse : 1;
+    real_t     (*windowfunc)();
+    FILE       *fp;
+    FILE       *wfp;
+    uchar_t    window;
+    char       *filename;
+    char       *wfilename;
+    char       *plotprog;
+    real_t     a;
+    real_t     ripple;
+    long       Q;
+    long       N; 
+    real_t     Fc;
+    real_t     Fd;
+    real_t     Fw;
+    real_t     Fs;
+    real_t     Ft;
+    real_t     attenuation;} ConfigStruct;
 
 
 #ifdef WIN32
@@ -130,41 +128,42 @@ typedef long long long64;
 #define PLOTMINIMUM -400
 
 /* Configuraton default values */
-#define DEFAULT_winchar		'h'
-#define DEFAULT_wstr		"Hamming"
-#define DEFAULT_windowfunc	hamming
-#define DEFAULT_opimpulse	FALSE
-#define DEFAULT_opwindow 	FALSE
-#define DEFAULT_inversion  	FALSE
-#define DEFAULT_reversal  	FALSE
-#define DEFAULT_bandpass 	FALSE
-#define DEFAULT_bandstop 	FALSE
-#define DEFAULT_decibels 	TRUE
-#define DEFAULT_magnitude 	FALSE
-#define DEFAULT_phase	 	FALSE
-#define DEFAULT_Xgraph	 	TRUE
-#define DEFAULT_automode 	FALSE
-#define DEFAULT_normalise	TRUE
-#define DEFAULT_filename	"filter.dat"
-#define DEFAULT_winfilename	"window.dat"
+#define DEFAULT_winchar        'h'
+#define DEFAULT_wstr            "Hamming"
+#define DEFAULT_windowfunc      hamming
+#define DEFAULT_opimpulse       FALSE
+#define DEFAULT_opwindow        FALSE
+#define DEFAULT_inversion       FALSE
+#define DEFAULT_reversal        FALSE
+#define DEFAULT_bandpass        FALSE
+#define DEFAULT_bandstop        FALSE
+#define DEFAULT_decibels        TRUE
+#define DEFAULT_magnitude       FALSE
+#define DEFAULT_phase           FALSE
+#define DEFAULT_Xgraph          TRUE
+#define DEFAULT_automode        FALSE
+#define DEFAULT_normalise       TRUE
+#define DEFAULT_symimpulse      FALSE
+#define DEFAULT_filename        "filter.dat"
+#define DEFAULT_winfilename     "window.dat"
 #define DEFAULT_plotprog        XPLOTPROG
-#define DEFAULT_removeplot	FALSE
-#define DEFAULT_ripple	 	0.0
-#define DEFAULT_Fd       	-1.0
-#define DEFAULT_a 	 	DEFAULT_HAMMING_ALPHA
-#define DEFAULT_N 	 	120 
-#define DEFAULT_Q 	 	0
-#define DEFAULT_Fc 	 	20000.0 
-#define DEFAULT_Fw 	 	10000.0 
-#define DEFAULT_Fs 	 	192000.0 
-#define DEFAULT_Ft		4000.0
-#define DEFAULT_attenuation	-60.0
+#define DEFAULT_removeplot      FALSE
+#define DEFAULT_ripple          0.0
+#define DEFAULT_Fd              -1.0
+#define DEFAULT_a               DEFAULT_HAMMING_ALPHA
+#define DEFAULT_N               120 
+#define DEFAULT_Q               0
+#define DEFAULT_Fc              20000.0 
+#define DEFAULT_Fw              10000.0 
+#define DEFAULT_Fs              192000.0 
+#define DEFAULT_Ft              4000.0
+#define DEFAULT_attenuation     -60.0
 
 /* So useful, make it a definition */
 //#define TWOPI (real_t)(2.00 * PI)
 
 /* Macro to turn the specified bit width into a scaling factor */
-#define SCALEFACTOR (real_t)(C->Q ? (((long64)1<<((long64)(C->Q-1))) - (long64)1) : 1)
+#define SCALEFACTOR (real_t)(C->Q ? (((long64)1<<((long64)(C->Q-1))) - (long64)(C->symimpulse ? 0 : 1)) : 1)
 
 /* Actual number of coefficients to be output (i.e. padded with 0s) */
 #define COEFFTOTAL (4 * 1024)

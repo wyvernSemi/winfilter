@@ -47,6 +47,7 @@
 #define IDC_WINFILENAME                 1040
 #define IDC_FDELTA                      1041
 #define IDC_ATTEN                       1042
+#define IDC_SYMIMP                      1043
 #define ID_FILE_OUTPUTFILE              40001
 #define ID_FILE_EXIT                    40002
 #define ID_HELP_ABOUT                   40003

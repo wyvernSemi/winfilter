@@ -1,6 +1,6 @@
 //=============================================================
 // 
-// Copyright (c) 1999-2016 Simon Southwell. All rights reserved.
+// Copyright (c) 1999-2023 Simon Southwell. All rights reserved.
 //
 // Date: 11th March 1999
 //
@@ -21,9 +21,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with WinFilter. If not, see <http://www.gnu.org/licenses/>.
-//
-// $Id: factorial.c,v 1.2 2016-09-27 08:42:56 simon Exp $
-// $Source: /home/simon/CVS/src/dsp/WinFilter/Code/factorial.c,v $
 //
 //=============================================================
 

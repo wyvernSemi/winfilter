@@ -1,6 +1,6 @@
 //=============================================================
 // 
-// Copyright (c) 1999-2016 Simon Southwell. All rights reserved.
+// Copyright (c) 1999-2023 Simon Southwell. All rights reserved.
 //
 // Date: 11th March 1999
 //
@@ -18,9 +18,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with WinFilter. If not, see <http://www.gnu.org/licenses/>.
-//
-// $Id: Graph.c,v 1.3 2016-09-27 08:42:56 simon Exp $
-// $Source: /home/simon/CVS/src/dsp/WinFilter/Code/Graph.c,v $
 //
 //=============================================================
 
@@ -101,9 +98,9 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 void PlotValueY(HDC hdc, int cy_b, int cy_c, int cx_b, double miny, double maxy, double value)
 {
-    int tmp;
+    int    tmp;
     double frac;
-    char        str[MAXSTRLEN] ;
+    char   str[MAXSTRLEN] ;
 
     frac = (1.0-fabs(value/miny)) * (double)(cy_c - 2 * cy_b);
 
@@ -145,7 +142,7 @@ LRESULT CALLBACK GraphCallback (HWND hwnd, UINT message,
     char        str[MAXSTRLEN] ;
     int DrawingMode;
     double scale_y;
-	//double tmp;
+    //double tmp;
     RECT rect;
     HRGN hrgn;
 
@@ -267,19 +264,6 @@ LRESULT CALLBACK GraphCallback (HWND hwnd, UINT message,
                      cyClient[this_ctx] - cyBorder[this_ctx],
                      str, strlen(str));
 
-
-	/*
-	for (tmp = 0.0; tmp > min_y[this_ctx]; tmp -= 10.0)
-            PlotValueY(hdc, cyBorder[this_ctx], cyClient[this_ctx],  cxBorder[this_ctx], min_y[this_ctx], max_y[this_ctx], (double)tmp);
-
-        tmp = cyBorder[this_ctx]+(cyClient[this_ctx]-2*cyBorder[this_ctx])/4;
-        MoveToEx(hdc, cxBorder[this_ctx] - BORDERSTANDOFF, tmp, NULL);
-        LineTo(hdc, cxBorder[this_ctx] - BORDERSTANDOFF/2, tmp);
-        sprintf(str, "%3.1lf", 3.0*(max_y[this_ctx] + min_y[this_ctx])/4.0);
-        TextOut(hdc, cxBorder[this_ctx] - BORDERSTANDOFF - 5, tmp , str, strlen(str));
-	*/
-
-
         MoveToEx(hdc, cxBorder[this_ctx] - BORDERSTANDOFF, cyClient[this_ctx]/2, NULL);
         LineTo(hdc, cxBorder[this_ctx] - BORDERSTANDOFF/2, cyClient[this_ctx]/2);
         sprintf(str, "%3.1lf", (max_y[this_ctx] + min_y[this_ctx])/2.0);
@@ -329,8 +313,8 @@ LRESULT CALLBACK GraphCallback (HWND hwnd, UINT message,
 
         SetTextAlign(hdc, TA_LEFT | TA_TOP);
         sprintf(str, "%3.1lf", pts[this_ctx][n[this_ctx]-1].x);
-	    TextOut(hdc, cxClient[this_ctx] - cxBorder[this_ctx],
-		             cyBorder[this_ctx] - 20,
+        TextOut(hdc, cxClient[this_ctx] - cxBorder[this_ctx],
+                     cyBorder[this_ctx] - 20,
                      str, strlen(str));
 
         SetTextAlign(hdc, TA_RIGHT);

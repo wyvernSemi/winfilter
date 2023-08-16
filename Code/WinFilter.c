@@ -1,6 +1,6 @@
 //=============================================================
 // 
-// Copyright (c) 1999-2016 Simon Southwell. All rights reserved.
+// Copyright (c) 1999-2023 Simon Southwell. All rights reserved.
 //
 // Date: 11th March 1999
 //
@@ -18,9 +18,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with WinFilter. If not, see <http://www.gnu.org/licenses/>.
-//
-// $Id: WinFilter.c,v 1.3 2016-09-27 08:42:56 simon Exp $
-// $Source: /home/simon/CVS/src/dsp/WinFilter/Code/WinFilter.c,v $
 //
 //=============================================================
 
@@ -233,6 +230,7 @@ BOOL CALLBACK DlgProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         EnableWindow(GetDlgItem(hDlg, IDC_WINFILENAME), FALSE);
         CheckDlgButton(hDlg, IDC_GRAPHOP, C->Xgraph);
         CheckDlgButton(hDlg, IDC_OPWINDOW, C->opwindow);
+        CheckDlgButton(hDlg, IDC_SYMIMP, C->symimpulse);
         sprintf(valstr, "%.2lf", C->Fc + C->Fw);
         SetDlgItemText(hDlg, IDC_FC2, valstr);
         sprintf(valstr, "%.2lf", C->Fc);
@@ -341,17 +339,35 @@ BOOL CALLBACK DlgProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
         // Output graphics
         case IDC_OPWINDOW:
-            C->opwindow = !C->opwindow;
-            C->Xgraph   = C->opwindow ? FALSE : C->Xgraph;
+            C->opwindow   = !C->opwindow;
+            C->Xgraph     = C->opwindow ? FALSE : C->Xgraph;
+            C->symimpulse = C->opwindow ? FALSE : C->symimpulse;
+            CheckDlgButton(hDlg, IDC_OPWINDOW, C->opwindow);
+            CheckDlgButton(hDlg, IDC_GRAPHOP, C->Xgraph);
+            CheckDlgButton(hDlg, IDC_SYMIMP, C->symimpulse);
+            return TRUE;
+
+        case IDC_SYMIMP:
+            C->symimpulse = !C->symimpulse;
+            C->Xgraph     = C->symimpulse ? FALSE : C->Xgraph;
+            C->opwindow   = C->symimpulse ? FALSE : C->opwindow;
+            C->opimpulse  = TRUE;
+            C->decibels   = FALSE;
+            C->magnitude  = FALSE;
+            C->phase      = FALSE;
+            CheckDlgButton(hDlg, IDC_SYMIMP, C->symimpulse);
+            CheckRadioButton(hDlg, IDC_IMPULSE, IDC_PHASE, IDC_IMPULSE);
             CheckDlgButton(hDlg, IDC_OPWINDOW, C->opwindow);
             CheckDlgButton(hDlg, IDC_GRAPHOP, C->Xgraph);
             return TRUE;
 
         case IDC_GRAPHOP:
-            C->Xgraph = !C->Xgraph;
-            C->opwindow = C->Xgraph ? FALSE : C->opwindow;
+            C->Xgraph     = !C->Xgraph;
+            C->opwindow   = C->Xgraph   ? FALSE : C->opwindow;
+            C->symimpulse = C->Xgraph ? FALSE : C->symimpulse;
             CheckDlgButton(hDlg, IDC_GRAPHOP, C->Xgraph);
             CheckDlgButton(hDlg, IDC_OPWINDOW, C->opwindow);
+            CheckDlgButton(hDlg, IDC_SYMIMP, C->symimpulse);
             return TRUE;
 
         // Automode check button
@@ -402,28 +418,24 @@ BOOL CALLBACK DlgProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
             C->magnitude = FALSE;
             C->phase     = FALSE;
             C->opimpulse = TRUE;
-            CheckRadioButton(hDlg, IDC_IMPULSE, IDC_PHASE, wParam);
             return TRUE;
         case IDC_FREQDB:
             C->decibels  = TRUE;
             C->magnitude = FALSE;
             C->phase     = FALSE;
             C->opimpulse = FALSE;
-            CheckRadioButton(hDlg, IDC_IMPULSE, IDC_PHASE, wParam);
             return TRUE;
         case IDC_FREQMAG:
             C->decibels  = FALSE;
             C->magnitude = TRUE;
             C->phase     = FALSE;
             C->opimpulse = FALSE;
-            CheckRadioButton(hDlg, IDC_IMPULSE, IDC_PHASE, wParam);
             return TRUE;
         case IDC_PHASE:
             C->decibels  = FALSE;
             C->magnitude = FALSE;
             C->phase     = TRUE;
             C->opimpulse = FALSE;
-            CheckRadioButton(hDlg, IDC_IMPULSE, IDC_PHASE, wParam);
             return TRUE;
 
         // Filter type
@@ -608,6 +620,8 @@ void SetDefaults(ConfigStruct *config)
     config->magnitude   = DEFAULT_magnitude;
     config->phase       = DEFAULT_phase;
     config->automode    = DEFAULT_automode;
+    config->normalise   = DEFAULT_normalise;
+    config->symimpulse  = DEFAULT_symimpulse;
     config->Xgraph      = DEFAULT_Xgraph;
     config->window      = DEFAULT_winchar;
     config->ripple      = DEFAULT_ripple;
@@ -669,6 +683,10 @@ void ExecuteAnalysis(ConfigStruct *C)
     if(C->Xgraph) {
         FLAGCHK;
         strcat(cmdstr[argcount], "X");
+    }
+    if(C->symimpulse) {
+        FLAGCHK;
+        strcat(cmdstr[argcount], "S");
     }
 
     if(flagset)

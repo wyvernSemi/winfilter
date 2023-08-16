@@ -1,6 +1,6 @@
 //=============================================================
 // 
-// Copyright (c) 1999-2016 Simon Southwell. All rights reserved.
+// Copyright (c) 1999-2023 Simon Southwell. All rights reserved.
 //
 // Date: 11th March 1999
 //
@@ -17,12 +17,6 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with WinFilter. If not, see <http://www.gnu.org/licenses/>.
-//
-// $Id: config.c,v 1.3 2016-09-27 08:42:56 simon Exp $
-// $Source: /home/simon/CVS/src/dsp/WinFilter/Code/config.c,v $
 //
 //=============================================================
 
@@ -97,6 +91,7 @@ int SetConfiguration (int argc, char **argv, ConfigStruct *config)
     config->windowfunc  = DEFAULT_windowfunc;
     config->Xgraph      = DEFAULT_Xgraph;
     config->normalise   = DEFAULT_normalise;
+    config->symimpulse  = DEFAULT_symimpulse;
     wstr                = DEFAULT_wstr;
     winchar             = DEFAULT_winchar;
 
@@ -110,7 +105,7 @@ int SetConfiguration (int argc, char **argv, ConfigStruct *config)
     config->wfp = stderr;
 
     /* Loop through all options specified */
-    while((option = getopt(argc, argv, "R:D:f:dnmpx:b:riIWuw:c:s:a:Q:N:XP:")) != EOF) {
+    while((option = getopt(argc, argv, "R:D:f:dnmpSx:b:riIWuw:c:s:a:Q:N:XP:")) != EOF) {
        /* Set globals based on returned option and arguments where applicable */
        switch(option) {
            case 'P':
@@ -171,6 +166,9 @@ int SetConfiguration (int argc, char **argv, ConfigStruct *config)
                break;
            case 'n':
                config->normalise = FALSE;
+               break;
+           case 'S':
+               config->symimpulse = TRUE;
                break;
            case 'W':
                config->opwindow = TRUE;
@@ -381,7 +379,7 @@ void DisplayUsage(char **argv)
     static char sbuf[200][80], *sbufptr[1];
     int n = 0, i;
 
-    sprintf(sbuf[n++], "\nUsage: %s [-unWirIX] [-w <window>] [-a <num>]\n", argv[0]);
+    sprintf(sbuf[n++], "\nUsage: %s [-unWirIXS] [-w <window>] [-a <num>]\n", argv[0]);
     sprintf(sbuf[n++], "              [-Q <num>] [-N <num>] [-d | -m | -p] [-c <num>]\n");
     sprintf(sbuf[n++], "              [-b <num> | -x <num>] [-s <num>] [-f <filename>]\n");
     sprintf(sbuf[n++], "              [-R <num> -D <num>]\n");
@@ -416,6 +414,7 @@ void DisplayUsage(char **argv)
     sprintf(sbuf[n++], "        -m Output values as magnitude (not impulse---default off)\n");
     sprintf(sbuf[n++], "        -p Output phase values (not impulse---default off)\n");
     sprintf(sbuf[n++], "        -n Output non-normalised frequency values (not impulse---default on)\n");
+    sprintf(sbuf[n++], "        -S Generate symmetrical impulse response (default off)\n");
     sprintf(sbuf[n++], "        -f Specify an output filename\n");
     sprintf(sbuf[n++], "        -I Output impulse response values (default frequency)\n");
     sprintf(sbuf[n++], "        -W Output window values to %s (default off)\n", DEFAULT_winfilename);

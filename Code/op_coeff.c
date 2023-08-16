@@ -1,6 +1,6 @@
 //=============================================================
 // 
-// Copyright (c) 1999-2016 Simon Southwell. All rights reserved.
+// Copyright (c) 1999-2023 Simon Southwell. All rights reserved.
 //
 // Date: 11th March 1999
 //
@@ -24,9 +24,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with WinFilter. If not, see <http://www.gnu.org/licenses/>.
-//
-// $Id: op_coeff.c,v 1.3 2016-09-27 08:42:56 simon Exp $
-// $Source: /home/simon/CVS/src/dsp/WinFilter/Code/op_coeff.c,v $
 //
 //=============================================================
 
@@ -81,8 +78,16 @@ void OutputCoefficients (complex_t result[], real_t WindowBuf[], ConfigStruct *C
        or as real_t numbers */
     if(C->opimpulse)
         for(n=0; n < C->N; n++)
-            if(C->Q > 0)
-                fprintf(C->fp, "%d %5d%c\n", n, (int)result[n].r, TRAILCHAR);
+            if (C->Q > 0)
+            {
+                if (!C->symimpulse)
+                    fprintf(C->fp, "%d %5d%c\n", n, (int)result[n].r, TRAILCHAR);
+                else {
+                    strcpy(str, "%04x%c\n");
+                    str[2] = '0' + (char)((C->Q + 1 + 3) / 4);
+                    fprintf(C->fp, str, ((int)result[n].r) & ((1 << (C->Q + 1)) - 1), TRAILCHAR);
+                }
+            }
             else
                 fprintf(C->fp, "%d %.20e%c\n", n, result[n].r, TRAILCHAR);
 

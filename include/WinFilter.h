@@ -1,6 +1,6 @@
 //=============================================================
 // 
-// Copyright (c) 1999-2016 Simon Southwell. All rights reserved.
+// Copyright (c) 1999-2023 Simon Southwell. All rights reserved.
 //
 // Date: 11th March 1999
 //
@@ -19,9 +19,6 @@
 // You should have received a copy of the GNU General Public License
 // along with WinFilter. If not, see <http://www.gnu.org/licenses/>.
 //
-// $Id: WinFilter.h,v 1.2 2016-09-27 08:42:34 simon Exp $
-// $Source: /home/simon/CVS/src/dsp/WinFilter/include/WinFilter.h,v $
-//
 //=============================================================
 
 #ifndef _WINFILTER_H_
@@ -39,34 +36,34 @@
 // -------------------------------------------------------------------------
 
 /* Define the fonts to use */
-#define DEFAULTLABELFONT        "lubBI14"
-#define DEFAULTBUTTONFONT       "timR14"
-#define DEFAULTTEXTFIELDFONT    "fixed"
+#define DEFAULTLABELFONT       "lubBI14"
+#define DEFAULTBUTTONFONT      "timR14"
+#define DEFAULTTEXTFIELDFONT   "fixed"
 
 /* Default margin width */
-#define DEFAULTMARGINWIDTH	5
+#define DEFAULTMARGINWIDTH     5
 
-#define MAXARGS			4
+#define MAXARGS                4
 
-#define MAXCMDARGS		20
-#define MAXDISPLINES 		50
+#define MAXCMDARGS             20
+#define MAXDISPLINES           50
 
-#define MAXFILENAMELEN 1024
-#define MAXSTRSIZE 80
-#define MAXMESSAGELINES 80
-#define X_SIZE 591
-#define Y_SIZE 508
+#define MAXFILENAMELEN         1024
+#define MAXSTRSIZE             80
+#define MAXMESSAGELINES        80
+#define X_SIZE                 591
+#define Y_SIZE                 508
 
-#define FLAGCHK 		\
-      if(!flagset) {		\
-	 flagset=TRUE;		\
-	 strcpy(cmdstr[argcount], "-");	\
+#define FLAGCHK                        \
+      if(!flagset) {                   \
+     flagset=TRUE;                     \
+     strcpy(cmdstr[argcount], "-");    \
       }
 
 // -------------------------------------------------------------------------
 // PROTOTYPES
 // -------------------------------------------------------------------------
-	  
+      
 extern LRESULT CALLBACK WndProc         (HWND, UINT, WPARAM, LPARAM);
 extern BOOL    CALLBACK DlgProc         (HWND, UINT, WPARAM, LPARAM);
 extern void             SetDefaults     (ConfigStruct *);
