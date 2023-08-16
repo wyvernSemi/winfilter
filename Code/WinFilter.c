@@ -163,8 +163,8 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
         case ID_FILE_OUTPUTFILE:
             return TRUE;
         case ID_HELP_ABOUT:
-            sprintf(str, "  WinFilter V1.0.1 - 29th July 2002\n"
-                         "Copyright (c) 2002-2007 Simon Southwell\n\n"
+            sprintf(str, "  WinFilter V1.0.2 - 16th August 2023\n"
+                         "Copyright (c) 2002-2023 Simon Southwell\n\n"
                          "e-mail: simon@anita-simulators.org.uk\n");
             MessageBox(NULL, str, TEXT("About"), MB_ICONASTERISK);
             return TRUE;
