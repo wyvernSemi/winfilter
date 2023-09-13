@@ -1,5 +1,5 @@
 //=============================================================
-// 
+//
 // Copyright (c) 1999-2023 Simon Southwell. All rights reserved.
 //
 // Date: 11th March 1999
@@ -38,40 +38,42 @@
 #include "filter.h"
 
 // -------------------------------------------------------------------------
-// Sinc function                                           
-//                                                         
+// Sinc function
+//
 // Sinc function (sin(x)/x) for use in low/high pass filter
-// design.                                                 
-//                                                         
+// design.
+//
 // -------------------------------------------------------------------------
 
-real_t sinc (const real_t x, const real_t Fc, const real_t Fs, const unsigned int inversion)
+real_t sinc (const real_t n, const real_t Fc, const real_t Fs, const unsigned int inversion)
 {
     real_t sinc_scaling;
 
-    /* Scaling required to get equation in the impulse form of
-       sin(2 Pi Fcut n)/(Pi n), where Fcut = Fc/Fs, and the passed
-       x parameter equals (2 Pi Fc/Fs n) */
-    sinc_scaling = (2.0 * Fc/Fs);  
+    real_t x = ((2 * M_PI) * (real_t)n * Fc / Fs);
 
-    /* If argument is 0, then return an absolute, as division 
-       by 0 will upset the 'pute. Inversion is simply multiplying 
-       by -1 for all coefficients except when x == 0, where it 
+    /* Scaling required for n == 0, as a function of Fc/Fs ratio.
+       As this approaches 0.5, the peak approaches 1.0. As this
+       approaches 0, the peak approaches 0 */ 
+    sinc_scaling = (2.0 * Fc / Fs);
+
+    /* If argument is 0, then return an absolute, as division
+       by 0 will upset the 'pute. Inversion is simply multiplying
+       by -1 for all coefficients except when x == 0, where it
        is the value subtracted from 1. */
     if(x == 0.0)
         return(inversion ? 1.0 - sinc_scaling : sinc_scaling);
     else
-        return(sinc_scaling * sin(x)/x * (inversion ? -1.0 : 1.0));
+        return(sin(x) / (n * M_PI) * (inversion ? -1.0 : 1.0));
 }
 
 // -------------------------------------------------------------------------
-// Bartlett window                                          
-//                                                          
+// Bartlett window
+//
 // This function produces a Bartlett (or triangular) window.
-// (NB: alpha value (a) unused in this function.)           
-//                                                          
-//   w(x) = 1 - |x|,       where -1 < x < 1                 
-//                                                          
+// (NB: alpha value (a) unused in this function.)
+//
+//   w(x) = 1 - |x|,       where -1 < x < 1
+//
 // -------------------------------------------------------------------------
 
 real_t bartlett (const real_t a, const real_t n, const real_t N)
@@ -81,10 +83,10 @@ real_t bartlett (const real_t a, const real_t n, const real_t N)
 }
 
 // -------------------------------------------------------------------------
-// Cosine window                                   
-//                                                 
+// Cosine window
+//
 // Cosine from -Pi/2 to +Pi/2 raised to the power a
-//                                                 
+//
 // -------------------------------------------------------------------------
 
 real_t cosine (const real_t a, const real_t n, const real_t N)
@@ -93,17 +95,17 @@ real_t cosine (const real_t a, const real_t n, const real_t N)
 }
 
 // -------------------------------------------------------------------------
-// Hamming window                                         
-//                                                        
+// Hamming window
+//
 // This window funcion produces a raised cosine. The para-
-// meter a defines how much the cosine is raised above 0. 
-// with a = 0 a uniform window is produced. With a = 0.5 a
-// von Hann window is produced.                           
-//                                                        
-//   w(x) = 2a cos(2 Pi x) + b                            
-//                                                        
-//        where 2a + b = 1, and -0.5 < x < 0.5            
-//                                                        
+// meter a defines how much the cosine is raised above 0.
+// with a = 0 a uniform window is produced. With a = 0.25 a
+// von Hann window is produced.
+//
+//   w(x) = 2a cos(2 Pi x) + b
+//
+//        where 2a + b = 1, and -0.5 < x < 0.5
+//
 // -------------------------------------------------------------------------
 
 real_t hamming (const real_t a, const real_t n, const real_t N)
@@ -118,18 +120,18 @@ real_t hamming (const real_t a, const real_t n, const real_t N)
 }
 
 // -------------------------------------------------------------------------
-// Bohman window                                 
-//                                               
-// This function produces a Bohman window.       
+// Bohman window
+//
+// This function produces a Bohman window.
 // (NB: alpha value (a) unused in this function.)
-//                                               
-//                                               
-//   w(x) = (1 - |x|) cos(Pi x) + sin(Pi |x|)    
-//                                ----------     
-//                                    Pi         
-//                                               
-//          where -1 < x < 1                     
-//                                               
+//
+//
+//   w(x) = (1 - |x|) cos(Pi x) + sin(Pi |x|)
+//                                ----------
+//                                    Pi
+//
+//          where -1 < x < 1
+//
 // -------------------------------------------------------------------------
 
 real_t bohman (const real_t a, const real_t n, const real_t N)
@@ -144,15 +146,15 @@ real_t bohman (const real_t a, const real_t n, const real_t N)
 }
 
 // -------------------------------------------------------------------------
-// Cauchy window                                 
-//                                               
-// This function produces a Cauchy window.       
-//                                               
-//               1                               
+// Cauchy window
+//
+// This function produces a Cauchy window.
+//
+//               1
 //   w(x) = ----------- ,        where -1 < x < 1
-//                  2                            
-//            1 + ax                             
-//                                               
+//                  2
+//            1 + ax
+//
 // -------------------------------------------------------------------------
 
 real_t cauchy (const real_t a, const real_t n, const real_t N)
@@ -166,15 +168,15 @@ real_t cauchy (const real_t a, const real_t n, const real_t N)
 }
 
 // -------------------------------------------------------------------------
-// Blackman window                                    
-//                                                    
-// This function produces a Blackman window.          
-// (NB: alpha value (a) unused in this function.)     
-//                                                    
+// Blackman window
+//
+// This function produces a Blackman window.
+// (NB: alpha value (a) unused in this function.)
+//
 //   w(x) = 0.42 - 0.5 cos(2 Pi x) + 0.08 cos(4 Pi x),
-//                                                    
-//          where 0 < x < 1                           
-//                                                    
+//
+//          where 0 < x < 1
+//
 // -------------------------------------------------------------------------
 
 real_t blackman (const real_t a, const real_t n, const real_t N)
@@ -184,24 +186,24 @@ real_t blackman (const real_t a, const real_t n, const real_t N)
     /* Adjust range to be from 0 to 1, rather than -0.5 to +0.5 */
     wT = (0.5 + n/N);
 
-    /* This function is 'like' a raised cosine in appearance, 
+    /* This function is 'like' a raised cosine in appearance,
        but obviously it isn't quite */
-    return(0.42 - 0.5 * cos((2*M_PI) * wT) + 
+    return(0.42 - 0.5 * cos((2*M_PI) * wT) +
            0.08 * cos(2.0 * (2*M_PI) * wT));
 }
 
 // -------------------------------------------------------------------------
-// Blackman-Harris  window                         
-//                                                 
+// Blackman-Harris  window
+//
 // This function produces a Blackman-Harris window.
-// (NB: alpha value (a) unused in this function.)  
-//                                                 
-//   w(x) = 0.35875 - 0.48829 cos(2 Pi x) +        
-//                    0.14128 cos(4 Pi x) -        
-//                    0.01168 cos(6 Pi x),         
-//                                                 
-//          where 0 < x < 1                        
-//                                                 
+// (NB: alpha value (a) unused in this function.)
+//
+//   w(x) = 0.35875 - 0.48829 cos(2 Pi x) +
+//                    0.14128 cos(4 Pi x) -
+//                    0.01168 cos(6 Pi x),
+//
+//          where 0 < x < 1
+//
 // -------------------------------------------------------------------------
 
 real_t blackman_harris (const real_t a, const real_t n, const real_t N)
@@ -211,27 +213,27 @@ real_t blackman_harris (const real_t a, const real_t n, const real_t N)
     /* Adjust range to be from 0 to 1, rather than -0.5 to +0.5 */
     wT = (0.5 + n/N);
 
-    /* This function is 'like' a raised cosine in appearance, 
+    /* This function is 'like' a raised cosine in appearance,
        but obviously it isn't quite */
-    return(0.35875 - 0.48829 * cos((2*M_PI) * wT) + 
+    return(0.35875 - 0.48829 * cos((2*M_PI) * wT) +
            0.14128 * cos(2.0 * (2*M_PI) * wT) -
            0.01168 * cos(3.0 * (2*M_PI) * wT));
 }
 
 // -------------------------------------------------------------------------
-// Nuttall window                                         
-//                                                        
+// Nuttall window
+//
 // This function produces a Nuttall window. It is a member
-// of the Blackman-Harris family, but with different      
-// coefficients.                                          
-// (NB: alpha value (a) unused in this function.)         
-//                                                        
-//   w(x) = 0.3635819 - 0.4891775 cos(2 Pi x) +           
-//                      0.1365995 cos(4 Pi x) -           
-//                      0.0106411 cos(6 Pi x),            
-//                                                        
-//          where 0 < x < 1                               
-//                                                        
+// of the Blackman-Harris family, but with different
+// coefficients.
+// (NB: alpha value (a) unused in this function.)
+//
+//   w(x) = 0.3635819 - 0.4891775 cos(2 Pi x) +
+//                      0.1365995 cos(4 Pi x) -
+//                      0.0106411 cos(6 Pi x),
+//
+//          where 0 < x < 1
+//
 // -------------------------------------------------------------------------
 
 real_t nuttall (const real_t a, const real_t n, const real_t N)
@@ -241,24 +243,24 @@ real_t nuttall (const real_t a, const real_t n, const real_t N)
     /* Adjust range to be from 0 to 1, rather than -0.5 to +0.5 */
     wT = (0.5 + n/N);
 
-    return(0.3635819 - 0.4891775 * cos((2*M_PI) * wT) + 
+    return(0.3635819 - 0.4891775 * cos((2*M_PI) * wT) +
            0.1365995 * cos(2.0 * (2*M_PI) * wT) -
            0.0106411 * cos(3.0 * (2*M_PI) * wT));
 }
 
 // -------------------------------------------------------------------------
-// Gaussian curve                                            
-//                                      2    2               
-//                             -(x - mu) /2(a )              
-//                            e                              
-//     Gaussian curve g(x) = ------------------              
-//                                     0.5                   
-//                                a (Pi   )                  
-//                                                           
-// where a represents the sigma value (the mean mu, normally 
-// subtracted from x is always 0 here, and the 1/(a Pi**0.5) 
+// Gaussian curve
+//                                      2    2
+//                             -(x - mu) /2(a )
+//                            e
+//     Gaussian curve g(x) = ------------------
+//                                     0.5
+//                                a (Pi   )
+//
+// where a represents the sigma value (the mean mu, normally
+// subtracted from x is always 0 here, and the 1/(a Pi**0.5)
 // normalisation is not done so that the window peaks at 1.0)
-//                                                           
+//
 // -------------------------------------------------------------------------
 
 real_t gauss (const real_t a, const real_t n, const real_t N)
@@ -267,15 +269,15 @@ real_t gauss (const real_t a, const real_t n, const real_t N)
 
     /* Scale points to run from +/- Pi */
     x = (2*M_PI) * n/N ;
-    
+
     return(exp((-1.0 * x * x)/(2.0 * a * a)));
 }
 
 // -------------------------------------------------------------------------
-// Poisson curve                                
-//                 -a |x|                                    
-//         w(x) = e      ,     where  -1 < x < 1          
-//                                                         
+// Poisson curve
+//                 -a |x|
+//         w(x) = e      ,     where  -1 < x < 1
+//
 // -------------------------------------------------------------------------
 
 real_t poisson (const real_t a, const real_t n, const real_t N)
@@ -284,15 +286,15 @@ real_t poisson (const real_t a, const real_t n, const real_t N)
 
     /* Scale points to run from +/- 1, and make absolute */
     x = ((n < 0) ? -2.0 : 2.0) * n/N ;
-    
+
     return(exp(-1.0 * a * x));
 }
 
 // -------------------------------------------------------------------------
-// Reisz curve                                 
-//                        2                                             
+// Reisz curve
+//                        2
 //          w(x) = 1 - |x| ,   where -1 < x < 1
-//                                                                      
+//
 // -------------------------------------------------------------------------
 
 real_t reisz (const real_t a, const real_t n, const real_t N)
@@ -301,15 +303,15 @@ real_t reisz (const real_t a, const real_t n, const real_t N)
 
     /* Scale points to run from +/- 1, and make absolute */
     x = ((n < 0) ? -2.0 : 2.0) * n/N ;
-    
+
     return(1.0 - (x * x));
 }
 
 // -------------------------------------------------------------------------
-// Riemann curve                                 
-//                                                                         
-//      w(x) = sin(Pi x)/(Pi x), where -1 < x < 1                          
-//                                               
+// Riemann curve
+//
+//      w(x) = sin(Pi x)/(Pi x), where -1 < x < 1
+//
 // -------------------------------------------------------------------------
 
 real_t riemann (const real_t a, const real_t n, const real_t N)
@@ -318,21 +320,21 @@ real_t riemann (const real_t a, const real_t n, const real_t N)
 
     /* Scale points to run from +/- 1 */
     x = 2.0 * n/N ;
-    
+
     return((x == 0) ? 1.0 : (sin(M_PI * x) / (M_PI * x)));
 }
 
 // -------------------------------------------------------------------------
 // Tukey curve
-//                                                 
-// w(x) = IF (|x| < a) => 1.0                      
-//                                                 
-//                         1             |x| - a   
+//
+// w(x) = IF (|x| < a) => 1.0
+//
+//                         1             |x| - a
 //        OTHERWISE    =>  - (1 + cos(Pi --------))
-//                         2               1 - a   
-//                                                 
-//        where -1 < x < 1                         
-//                                                 
+//                         2               1 - a
+//
+//        where -1 < x < 1
+//
 // -------------------------------------------------------------------------
 
 real_t tukey (const real_t a, const real_t n, const real_t N)
@@ -341,19 +343,19 @@ real_t tukey (const real_t a, const real_t n, const real_t N)
 
     /* Scale points to run from +/- 1  and make absolute */
     x = ((n < 0) ? -2.0 : 2.0) * n/N ;
-    
+
     return((x < a) ? 1.0 : (0.5 * (1.0 + cos(M_PI * (x-a)/(1-a)))));
 }
 
 // -------------------------------------------------------------------------
-// VallePoisson curve                    
-//                               2       
+// VallePoisson curve
+//                               2
 //      IF (|x| < 0.5) => 1 - 6 x (1 - x)
-//                                       
-//                                 3     
-//      OTHERWISE      => 2 (1 - x)      
-//                                       
-//      where -1 < x < 1                 
+//
+//                                 3
+//      OTHERWISE      => 2 (1 - x)
+//
+//      where -1 < x < 1
 // -------------------------------------------------------------------------
 
 real_t vallepoisson (const real_t a, const real_t n, const real_t N)
@@ -362,27 +364,27 @@ real_t vallepoisson (const real_t a, const real_t n, const real_t N)
 
     /* Scale points to run from +/- 1  and make absolute */
     x = ((n < 0) ? -2.0 : 2.0) * n/N ;
-    
-    return((x < 0.5) ? (1.0 - 6 * x * x * (1 - x)) : 
+
+    return((x < 0.5) ? (1.0 - 6 * x * x * (1 - x)) :
                        (2 * (1-x) * (1-x) * (1-x)));
 }
 
 // -------------------------------------------------------------------------
-// Kaiser window                                          
-//                                                        
-// This function produces a Kaiser window. The parameter a
-// defines the shape of the window. With a = 0, a uniform 
-// window is produced. With a ~= 5.4, a similar response  
-// to a Hamming window is produced.                       
+// Kaiser window
 //
-// 
+// This function produces a Kaiser window. The parameter a
+// defines the shape of the window. With a = 0, a uniform
+// window is produced. With a ~= 5.4, a similar response
+// to a Hamming window is produced.
+//
+//
 //                                   n    2   0.5
 //                  I ( a {  1 - [ ----- ]   }    )
 //                   0             0.5 N
 //  Kaiser(n)  =    -------------------------------
 //                              I (a)
 //                               0
-//                                                       
+//
 // -------------------------------------------------------------------------
 
 real_t kaiser (const real_t a, const real_t n, const real_t N)
@@ -401,17 +403,17 @@ real_t kaiser (const real_t a, const real_t n, const real_t N)
 
 // -------------------------------------------------------------------------
 // Modified Bessel function I (order 0) of the first type
-//         
+//
 //          infinity
 //            --+
-//            \     1     x   k  2 
+//            \     1     x   k  2
 //   I  = 1 +  >  ( -  [  -  ]  )
 //    0       /     k!    2
 //            --+
 //           k = 1
-// Sum from k = 1 to 69 (ought to be accurate enough---can't 
-// do infinity, but series terms converges toward 0 with increasing k) 
-// 
+// Sum from k = 1 to 69 (ought to be accurate enough---can't
+// do infinity, but series terms converges toward 0 with increasing k)
+//
 // -------------------------------------------------------------------------
 
 static real_t I0 (const real_t x)
@@ -450,11 +452,11 @@ KaiserParamStruct design_kaiser_filter (const real_t Fd, const real_t Fs, const 
        values. Is Fd value counted twice for both mirrored halves of response? */
     result.N = (int)(0.5 + ((ripple - 7.95)/(14.36 * Fd / (0.5 * Fs))));
 
-    /* Alpha = 0,                                                    |Ripple| <= 21; 
-       Alpha = 0.5842 (|Ripple| - 21)^0.4 + 0.07886 (|Ripple| - 21), 21 < |Ripple| < 50; 
+    /* Alpha = 0,                                                    |Ripple| <= 21;
+       Alpha = 0.5842 (|Ripple| - 21)^0.4 + 0.07886 (|Ripple| - 21), 21 < |Ripple| < 50;
        Alpha = 0.1102 (|Ripple| - 8.7),                              Otherwise */
     result.a = (ripple <= 21.0) ? 0.0 :
-               ((ripple > 21.0 && ripple < 50) ? 
+               ((ripple > 21.0 && ripple < 50) ?
                 (0.5842 * pow((ripple - 21.0), 0.4) + 0.07886 * (ripple - 21.0)) :
                 (0.1102 * (ripple - 8.7)));
 
@@ -462,21 +464,21 @@ KaiserParamStruct design_kaiser_filter (const real_t Fd, const real_t Fs, const 
 }
 
 // -------------------------------------------------------------------------
-// Chebyshev window                                         
-//                                                          
-// This function produces a Chebyshev window. The frequency 
-// response is given by:                                    
-//                                                          
-//            Cheb(N-1, beta * cos(pi * n/N))               
-//     W(k) = -------------------------------               
-//                   Cheb(N-1, beta)                        
-//                                                          
+// Chebyshev window
+//
+// This function produces a Chebyshev window. The frequency
+// response is given by:
+//
+//            Cheb(N-1, beta * cos(pi * n/N))
+//     W(k) = -------------------------------
+//                   Cheb(N-1, beta)
+//
 // beta = cosh(1/(N-1) * acosh(10^a)), and Cheb(N, x) is Nth
 // order polynomial at point x. Denominator is constant, and
-// not calculated as the inverse transformed result is      
-// normalised. An inverse DFT is used to obtain the time    
-// domain values.                                           
-//                                                          
+// not calculated as the inverse transformed result is
+// normalised. An inverse DFT is used to obtain the time
+// domain values.
+//
 // -------------------------------------------------------------------------
 
 real_t chebyshev (const real_t a, const real_t n, const real_t N)
@@ -493,13 +495,13 @@ real_t chebyshev (const real_t a, const real_t n, const real_t N)
     // If this is the first value, initialise the window table for the new value of 'a'
     if(k == (-1 * M/2)) {
 
-        // In case buffer memory was not cleared on a previous run, 
+        // In case buffer memory was not cleared on a previous run,
         // clear it now for a new allocation
         if(buf != NULL) {
             free(buf);
             buf = NULL;
         }
-        
+
         if((buf = calloc(M, sizeof(complex_t))) == NULL)
             return 0;
 
@@ -512,7 +514,7 @@ real_t chebyshev (const real_t a, const real_t n, const real_t N)
             buf[i].i = 0;
         }
 
-        // Inverse transform to get time response 
+        // Inverse transform to get time response
         // DFT used if N is not a power of 2 (FFT needs power of 2 points).
         if(M & (M-1))
             fft_status = dft(buf, M, 1);
@@ -528,12 +530,12 @@ real_t chebyshev (const real_t a, const real_t n, const real_t N)
         }
 
         // Find max value
-        for(i = 0; i < M; i++) 
+        for(i = 0; i < M; i++)
             if(dftmax < buf[i].r || i == 0)
                 dftmax =  buf[i].r;
 
         // Normalise
-        for(i = 0; i < M; i++) 
+        for(i = 0; i < M; i++)
             buf[i].r = buf[i].r / dftmax;
     }
 

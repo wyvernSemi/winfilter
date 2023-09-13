@@ -169,8 +169,7 @@ static void GenerateImpulse (real_t result[], const ConfigStruct *C)
     for(n = (-1 * C->N)/2; n <= C->N/2; n++) {
         /* X(n) is 'sinc(2 Pi n Fc/Fs).' If spectral reversal is
            selected, multiply odd coefficents by -1. */
-        tmp = sinc(((2*M_PI) * (real_t) n * C->Fc / C->Fs), 
-                                  C->Fc, C->Fs, C->inversion) *
+        tmp = sinc((real_t)n, C->Fc, C->Fs, C->inversion) *
                              ((C->reversal && abs(n)%2) ? -1.0 : 1.0);
         result[n + C->N/2] = tmp;
     }
