@@ -6,5 +6,5 @@ As well as producing a set of filter tap values that may be used to implement a 
 
 <br>
 <p align="center">
-  <img src="http://www.anita-simulators.org.uk/wyvernsemi/WinFilter/images/winfilter1.png" width=500/>
+<img src="https://github.com/wyvernSemi/winfilter/assets/21970031/01a6f8e5-67fb-4b7f-a230-430906a70570" width=600>
 </p>
